@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import * as uuid from 'uuid/v1';
 import { CreateDto } from './dto/create.dto';
@@ -11,7 +11,13 @@ export class TasksService {
 
 
     getById(id: string) {
-        return this.tasks.find(task => task.id === id);
+        const task = this.tasks.find(task => task.id === id);
+
+        if (!task) {
+            throw new NotFoundException('Custom message Not Found!');
+        }
+
+        return task;
     }
 
     getAll(): Task[] {
@@ -58,9 +64,9 @@ export class TasksService {
 
     delete(id: string): Task[] {
 
-        this.tasks = this.tasks.filter(task => task.id !== id);
+        const found = this.getById(id);
 
-        return this.tasks;
+        return this.tasks.filter(task => task.id !== found.id);
     }
 
     updateStatus(id: string, status: TaskStatus): Task {
