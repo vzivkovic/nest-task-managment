@@ -29,11 +29,7 @@ export class TasksController {
   @Get()
   index(@Query(ValidationPipe) filter: FilterDto) {
 
-    console.log(1);
-    // if (Object.keys(filter).length) {
-    //     return this.tasksService.getAllWithFillter(filter);
-    // }
-    // return this.tasksService.getAll();
+    return this.tasksService.getAll(filter);
   }
 
   @Get('/:id')
@@ -49,14 +45,14 @@ export class TasksController {
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    console.log(1);
-      // return this.tasksService.delete(id);
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    await this.tasksService.delete(id);
   }
 
   @Patch('/:id/status')
-  updateStatus(@Param('id') id: string, @Body('status', StatusValidationPipe) status: TaskStatus){
-    console.log(1);
-      // return this.tasksService.updateStatus(id, status);
+  updateStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status', StatusValidationPipe) status: TaskStatus) {
+    return this.tasksService.updateStatus(id, status);
   }
 }
