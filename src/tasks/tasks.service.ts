@@ -28,27 +28,6 @@ export class TasksService {
     return await this.taskRepository.getAll(filter);
   }
 
-  // getAllWithFillter(fillter: FilterDto): Task[] {
-
-  //     const { status, search } = fillter;
-
-  //     let tasks = this.getAll();
-
-  //     if (status) {
-  //         tasks = tasks.filter(task => task.status === status);
-  //     }
-
-  //     if (search) {
-
-  //         tasks = tasks.filter(task =>
-  //             task.title.includes(search) ||
-  //             task.description.includes(search)
-  //         );
-  //     }
-
-  //     return tasks;
-  // }
-
   async create(createDto: CreateDto): Promise<Task> {
 
     return this.taskRepository.createTask(createDto);
