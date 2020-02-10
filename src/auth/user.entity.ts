@@ -1,12 +1,13 @@
-import { BaseEntity, Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Entity()
+@Unique(['username'])
 export class User extends BaseEntity{
 
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Index({ unique: true })
+  // @Index({ unique: true })
   @Column()
   username: string;
 

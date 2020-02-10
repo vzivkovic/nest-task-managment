@@ -8,8 +8,8 @@ export class AuthController {
   constructor(private authService: AuthService) {
   }
 
-  @Post()
-  async signUp(@Body() authCredentialDto: AuthCredentialDto): Promise<void> {
+  @Post("signup")
+  async signUp(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto): Promise<void> {
     await this.authService.signUp(authCredentialDto);
   }
 }

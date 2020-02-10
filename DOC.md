@@ -14,6 +14,8 @@
         - provajdovanje podataka kao Objekat
         - provajdovanje podataka asinhrono sa srvis
 6. Doc for [repository]
+7. yarn add bcrypt
+    - yarn add @types/bcrypt 
 
 
 
