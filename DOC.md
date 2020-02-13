@@ -16,6 +16,7 @@
 6. Doc for [repository]
 7. yarn add bcrypt
     - yarn add @types/bcrypt 
+    - yarn @nestjs/jwt @nestjs/passport passport passport-jwt
 
 
 
