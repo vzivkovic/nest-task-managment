@@ -5,16 +5,14 @@ import { AuthCredentialDto } from './dto/auth-credential.dto';
 @Controller('auth')
 export class AuthController {
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+  ) {
   }
 
   @Post('/sign-in')
-  async signIn(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto) {
-    const username = await this.authService.signIn(authCredentialDto);
-
-    if (!username){
-      throw new UnauthorizedException('Invalid credential!')
-    }
+  async signIn(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto): Promise<{ accessToken: string }> {
+    return await this.authService.signIn(authCredentialDto);
   }
 
   @Post('/sign-up')
