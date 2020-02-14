@@ -33,10 +33,9 @@ export class AuthController {
     await this.authService.signUp(authCredentialDto);
   }
 
-  // test() {
   @Post('/auth-check')
   @UseGuards(AuthGuard())
-    authCheck(@GetAuthDecorator() auth: User) {
+  authCheck(@GetAuthDecorator() auth: User) {
     console.log(auth);
     console.log(1);
   }
