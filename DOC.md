@@ -17,6 +17,7 @@
 7. yarn add bcrypt
     - yarn add @types/bcrypt 
     - yarn @nestjs/jwt @nestjs/passport passport passport-jwt
+8. yarn add config
 
 
 
