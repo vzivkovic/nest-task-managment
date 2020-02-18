@@ -31,14 +31,20 @@ export class TasksController {
   }
 
   @Get()
-  index(@Query(ValidationPipe) filter: FilterDto) {
+  index(
+    @Query(ValidationPipe) filter: FilterDto,
+    @GetAuthDecorator() auth: User,
+  ) {
 
-    return this.tasksService.getAll(filter);
+    return this.tasksService.getAll(filter, auth);
   }
 
   @Get('/:id')
-  show(@Param('id', ParseIntPipe) id: number): Promise<Task> {
-    return this.tasksService.getById(id);
+  show(
+    @Param('id', ParseIntPipe) id: number,
+    @GetAuthDecorator() auth: User,
+  ): Promise<Task> {
+    return this.tasksService.getById(id, auth);
   }
 
   @Post()
@@ -52,14 +58,19 @@ export class TasksController {
   }
 
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    await this.tasksService.delete(id);
+  async delete(
+    @Param('id', ParseIntPipe) id: number,
+    @GetAuthDecorator() auth: User,
+    ): Promise<void> {
+    await this.tasksService.delete(id, auth);
   }
 
   @Patch('/:id/status')
   updateStatus(
     @Param('id', ParseIntPipe) id: number,
-    @Body('status', StatusValidationPipe) status: TaskStatus) {
-    return this.tasksService.updateStatus(id, status);
+    @Body('status', StatusValidationPipe) status: TaskStatus,
+    @GetAuthDecorator() auth: User,
+    ) {
+    return this.tasksService.updateStatus(id, auth, status);
   }
 }

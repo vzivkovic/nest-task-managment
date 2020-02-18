@@ -15,8 +15,8 @@ export class TasksService {
   ) {
   }
 
-  async getById(id: number): Promise<Task> {
-    const task = await this.taskRepository.findOne(id);
+  async getById(id: number, auth: User): Promise<Task> {
+    const task = await this.taskRepository.findOne({ id, userId: auth.id });
 
     if (!task) {
       throw new NotFoundException('Custom message Not Found!');
@@ -25,8 +25,8 @@ export class TasksService {
     return task;
   }
 
-  async getAll(filter: FilterDto): Promise<Task[]> {
-    return await this.taskRepository.getAll(filter);
+  async getAll(filter: FilterDto, auth: User): Promise<Task[]> {
+    return await this.taskRepository.getAll(filter, auth);
   }
 
   async create(createDto: CreateDto, auth: User): Promise<Task> {
@@ -35,17 +35,17 @@ export class TasksService {
 
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number, auth: User): Promise<void> {
 
-    const result = await this.taskRepository.delete({ id });
+    const result = await this.taskRepository.delete({ id, userId: auth.id });
 
     if (!result.affected) {
       throw new NotFoundException('Task Not Found!');
     }
   }
 
-  async updateStatus(id: number, status: TaskStatus) {
-    const task = await this.getById(id);
+  async updateStatus(id: number, auth: User, status: TaskStatus) {
+    const task = await this.getById(id, auth);
     task.status = status;
     await task.save();
     return task;
